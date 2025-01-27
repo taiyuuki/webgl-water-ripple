@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../dist/umd/index.js"></script>
+</head>
+
+<body>
+    <canvas width="1365" height="768"></canvas>
+    <div>
+        <!-- 速度 -->
+        速度
+        <input type="range" min="0" max="1" step="0.01" value="0.15" id="speed"><span id="speed-value">0.15</span>
+        <!-- 滚动速度 -->
+        滚动速度
+        <input type="range" min="0" max="1" step="0.01" value="0.15" id="scrollSpeed"><span
+            id="scspanSpeed-value">0.15</span>
+        <!-- 滚动方向 -->
+        滚动方向
+        <input type="range" min="0" max="360" step="1" value="270" id="direction"><span id="direction-value">270</span>
+        <!-- 比率 -->
+        比率
+        <input type="range" min="0.5" max="2" step="0.1" value="1" id="ratio"><span id="ratio-value">1</span>
+        <!-- 涟漪比例 -->
+        涟漪比例
+        <input type="range" min="0" max="10" step="0.1" value="5" id="scale"><span id="scale-value">5</span>
+        <!-- 涟漪强度 -->
+        涟漪强度
+        <input type="range" min="0" max="1" step="0.01" value="0.1" id="strength"><span id="sspangth-value">0.1</span>
+    </div>
+</body>
+<script>
+    const canvas = document.querySelector('canvas');
+    const waterRipple = new webglWR.WaterRipple({ canvas, imageURL: './miku_wet.png', maskURL: 'waterripple_mask.png' });
+    // const waterRipple = new webglWR.WaterRipple({ canvas, imageURL: './miku_wet.png' });
+    waterRipple.animate();
+
+    document.querySelector('#speed').addEventListener('input', (e) => {
+        waterRipple.setProperty('animationSpeed', Number(e.target.value));
+        document.querySelector('#speed-value').textContent = e.target.value;
+    });
+    document.querySelector('#scrollSpeed').addEventListener('input', (e) => {
+        waterRipple.setProperty('scrollSpeed', Number(e.target.value));
+        document.querySelector('#scspanSpeed-value').textContent = e.target.value;
+    });
+    document.querySelector('#direction').addEventListener('input', (e) => {
+        waterRipple.setProperty('direction', Number(e.target.value));
+        document.querySelector('#direction-value').textContent = e.target.value;
+    });
+    document.querySelector('#ratio').addEventListener('input', (e) => {
+        waterRipple.setProperty('ratio', Number(e.target.value));
+        document.querySelector('#ratio-value').textContent = e.target.value;
+    });
+    document.querySelector('#scale').addEventListener('input', (e) => {
+        waterRipple.setProperty('scale', Number(e.target.value));
+        document.querySelector('#scale-value').textContent = e.target.value;
+    });
+    document.querySelector('#strength').addEventListener('input', (e) => {
+        waterRipple.setProperty('strength', Number(e.target.value));
+        document.querySelector('#sspangth-value').textContent = e.target.value;
+    });
+</script>
+
+</html>

@@ -1,0 +1,61 @@
+{
+  "name": "webgl-water-ripple",
+  "version": "0.0.1",
+  "description": "",
+  "type": "module",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/types/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/taiyuuki/webgl-water-ripple"
+  },
+  "bugs": "https://github.com/taiyuuki/webgl-water-ripple/issues",
+  "homepage": "https://github.com/taiyuuki/webgl-water-ripple#readme",
+  "scripts": {
+    "lint": "eslint --fix",
+    "dev": "rollup -cw",
+    "build": "rollup -c"
+  },
+  "keywords": [],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    }
+  },
+  "author": "taiyuuki <taiyuuki@qq.com>",
+  "license": "MIT",
+  "files": [
+    "dist"
+  ],
+  "devDependencies": {
+    "@babel/core": "^7.26.7",
+    "@rollup/plugin-babel": "^6.0.4",
+    "@rollup/plugin-commonjs": "^28.0.2",
+    "@rollup/plugin-node-resolve": "^16.0.0",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@taiyuuki/eslint-config": "^1.4.16",
+    "@types/node": "^22.10.10",
+    "eslint": "^9.19.0",
+    "rollup": "^4.32.0",
+    "rollup-plugin-copy": "^3.5.0",
+    "rollup-plugin-dts": "^6.1.1",
+    "rollup-plugin-node-builtins": "^2.1.2",
+    "rollup-plugin-node-globals": "^1.4.0",
+    "rollup-plugin-typescript2": "^0.36.0",
+    "typescript": "^5.7.3"
+  },
+  "dependencies": {
+    "glslCanvas": "^0.2.6"
+  },
+  "pnpm": {
+    "peerDependencyRules": {
+      "allowedVersions": {
+        "eslint": "9"
+      }
+    }
+  }
+}
