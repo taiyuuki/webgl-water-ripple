@@ -29,7 +29,7 @@ class WaterRipple {
             throw new TypeError('[WaterRipple] A canvas element is required.')
         }
         if (!imageURL || typeof imageURL !== 'string') {
-            throw new TypeError('[WaterRipple] An Image URL is required.')
+            throw new TypeError('[WaterRipple] Image URL is required.')
         }
         this._time = 0
         this._animationID = -1
@@ -55,21 +55,24 @@ class WaterRipple {
         this._glsl.setUniform('g_Ratio', opts.ratio)
         this._glsl.setUniform('g_Strength', opts.strength)
         
-        this._loadImage(imageURL, 'g_Texture0')
-        if (opts.maskURL) {
-            this._loadImage(opts.maskURL, 'g_Texture1')
-        }
-        if (opts.normalMapURL) {
-            this._loadImage(opts.normalMapURL, 'g_Texture2')
-        }
-        else {
-
-            // this._loadImage(waterNormalTexture, 'g_Texture2')
-
-            import('./waternormal').then(({ waterNormalTexture }) => {
-                this._loadImage(waterNormalTexture, 'g_Texture2')
-            })
-        }
+        this._loadImage(imageURL, 'g_Texture0').then(img => {
+            canvas.width = img.naturalWidth
+            canvas.height = img.naturalHeight
+            if (opts.maskURL) {
+                this._loadImage(opts.maskURL, 'g_Texture1')
+            }
+            if (opts.normalMapURL) {
+                this._loadImage(opts.normalMapURL, 'g_Texture2')
+            }
+            else {
+    
+                // this._loadImage(waterNormalTexture, 'g_Texture2')
+    
+                import('./waternormal').then(({ waterNormalTexture }) => {
+                    this._loadImage(waterNormalTexture, 'g_Texture2')
+                })
+            }
+        })
     }
 
     private async _loadImage(url: string, uniformName: string) {
@@ -77,15 +80,15 @@ class WaterRipple {
         const img = new Image()
         img.src = url
 
-        return new Promise((resolve, reject) => {
+        return new Promise<HTMLImageElement>((resolve, reject) => {
             img.onload = () => {
                 this._glsl.setUniform(uniformName, url)
                 this._glsl.setUniform(resolutionName, img.naturalWidth, img.naturalHeight, 1, 1)
-                resolve(url)
+                resolve(img)
             }
             img.onerror = () => {
                 console.error('Failed to load image:', url)
-                reject(url)
+                reject(img)
             }
         })
     }
