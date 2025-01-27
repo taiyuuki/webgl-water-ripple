@@ -6,36 +6,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="../dist/umd/index.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
 </head>
 
 <body>
     <canvas width="1365" height="768"></canvas>
     <div>
-        <!-- 速度 -->
-        速度
-        <input type="range" min="0" max="1" step="0.01" value="0.15" id="speed"><span id="speed-value">0.15</span>
-        <!-- 滚动速度 -->
-        滚动速度
-        <input type="range" min="0" max="1" step="0.01" value="0.15" id="scrollSpeed"><span
-            id="scspanSpeed-value">0.15</span>
-        <!-- 滚动方向 -->
-        滚动方向
+        Speed
+        <input type="range" min="0" max="1" step="0.01" value="0.2" id="speed"><span id="speed-value">0.2</span>
+        Scroll Speed
+        <input type="range" min="0" max="1" step="0.01" value="0.2" id="scrollSpeed"><span
+            id="scspanSpeed-value">0.2</span>
+        Scroll Direction
         <input type="range" min="0" max="360" step="1" value="270" id="direction"><span id="direction-value">270</span>
-        <!-- 比率 -->
-        比率
+        Ratio
         <input type="range" min="0.5" max="2" step="0.1" value="1" id="ratio"><span id="ratio-value">1</span>
-        <!-- 涟漪比例 -->
-        涟漪比例
+        Ripple Scale
         <input type="range" min="0" max="10" step="0.1" value="5" id="scale"><span id="scale-value">5</span>
-        <!-- 涟漪强度 -->
-        涟漪强度
+        Ripple Strength
         <input type="range" min="0" max="1" step="0.01" value="0.1" id="strength"><span id="sspangth-value">0.1</span>
     </div>
 </body>
 <script>
     const canvas = document.querySelector('canvas');
-    const waterRipple = new webglWR.WaterRipple({ canvas, imageURL: './miku_wet.png', maskURL: 'waterripple_mask.png' });
-    // const waterRipple = new webglWR.WaterRipple({ canvas, imageURL: './miku_wet.png' });
+    const waterRipple = new webglWR.WaterRipple({ canvas, imageURL: './miku.png', maskURL: './miku_mask.png' });
+    // const waterRipple = new webglWR.WaterRipple({ canvas, imageURL: './miku.png' });
     waterRipple.animate();
 
     document.querySelector('#speed').addEventListener('input', (e) => {

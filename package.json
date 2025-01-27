@@ -1,7 +1,7 @@
 {
   "name": "webgl-water-ripple",
-  "version": "0.0.1",
-  "description": "",
+  "version": "0.1.0",
+  "description": "A WebGL implementation of water ripples.",
   "type": "module",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
