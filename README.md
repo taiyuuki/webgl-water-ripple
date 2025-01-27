@@ -11,6 +11,11 @@ npm i webgl-water-ripple
 ```javascript
 import WaterRipple from 'webgl-water-ripple'
 
+const options = {
+    canvas: document.getElementById('canvas'),
+    imageURL: 'https://example.com/image.jpg',
+}
+
 const waterRipple = new WaterRipple(options)
 
 waterRipple.animate()
