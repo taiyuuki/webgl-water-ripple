@@ -33,7 +33,7 @@ npm i webgl-water-ripple
 import { WaterRipple } from 'webgl-water-ripple'
 
 const options = {
-    canvas: document.querySelector('canvas'),
+    canvas: '#water-ripple',
     imageURL: 'https://example.com/image.jpg',
 }
 
