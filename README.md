@@ -14,7 +14,7 @@ Download the [water-ripple-min.js](../../tree/main/test/water-ripple-min.js) fil
 <script>
     const options = {
         canvas: '#water-ripple',
-        imageURL: 'https://webgl-water-ripple.netlify.app/miku.png',
+        imageURL: 'https://example.com/image.jpg',
     }
 
     const waterRipple = new webglWR.WaterRipple(options)
@@ -30,7 +30,7 @@ npm i webgl-water-ripple
 ```
 
 ```javascript
-import WaterRipple from 'webgl-water-ripple'
+import { WaterRipple } from 'webgl-water-ripple'
 
 const options = {
     canvas: document.querySelector('canvas'),

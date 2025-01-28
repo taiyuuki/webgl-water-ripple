@@ -1,11 +1,11 @@
 {
   "name": "webgl-water-ripple",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A WebGL implementation of water ripples.",
   "type": "module",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
-  "types": "./dist/types/index.d.ts",
+  "typings": "./dist/types/index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/taiyuuki/webgl-water-ripple"
@@ -21,7 +21,7 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
+      "types": "./dist/types/index.d.ts",
       "import": "./dist/esm/index.js",
       "require": "./dist/cjs/index.js"
     }
