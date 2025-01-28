@@ -4,6 +4,27 @@ This is a WebGL implementation of applying water ripples effect to an image.
 
 ## Usage
 
+[Demo](https://webgl-water-ripple.netlify.app/)
+
+Download the [water-ripple-min.js](../../tree/main/test/water-ripple-min.js) file and include it in your HTML file. There is a `webglWR` object in the global scope, which you can use to create a new instance of `WaterRipple`.
+
+```html
+<canvas id="water-ripple"></canvas>
+<script src="water-ripple-min.js"></script>
+<script>
+    const options = {
+        canvas: '#water-ripple',
+        imageURL: 'https://webgl-water-ripple.netlify.app/miku.png',
+    }
+
+    const waterRipple = new webglWR.WaterRipple(options)
+</script>
+```
+
+You can see the [index.html](../../tree/main/test/index.html) file for a complete example.
+
+Or install the package using npm:
+
 ```bash
 npm i webgl-water-ripple
 ```
