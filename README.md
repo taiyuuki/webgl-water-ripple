@@ -1,6 +1,6 @@
 ## webgl-water-ripper
 
-This is a WebGL implementation of water ripples.
+This is a WebGL implementation of applying water ripples effect to an image.
 
 ## Usage
 
@@ -12,27 +12,78 @@ npm i webgl-water-ripple
 import WaterRipple from 'webgl-water-ripple'
 
 const options = {
-    canvas: document.getElementById('canvas'),
+    canvas: document.querySelector('canvas'),
     imageURL: 'https://example.com/image.jpg',
 }
 
 const waterRipple = new WaterRipple(options)
 
-waterRipple.animate()
+waterRipple.setProperty('animationSpeed', 0.3)
+waterRipple.setProperty('scrollSpeed', 0.3)
+
+// waterRipple.stop() // stop the animation
+// waterRipple.destroy() // destroy the instance
 ```
-the `options` parameter is an object with the following properties:
+
+The `options` parameter is an object with the following properties:
 
 ```typescript
 interface WaterRipperOptions { 
-    canvas: HTMLCanvasElement // the canvas element where the water ripple effect will be rendered.
-    imageURL: string // the texture image you want to use with the water ripple effect.
-    maskURL?: string // the mask texture, it controls the opacity of the water ripple.
-    normalMapURL?: string // the normal map for the water ripple.
-    animationSpeed?: number // the animation speed.
-    scale?: number // the scale of the water ripple.
-    scrollSpeed?: number // the scroll speed of the water ripple.
-    direction?: number // the direction of the water ripple.
-    ratio?: number // the ratio of the water ripple.
-    strength?: number // the strength of the water ripple.
+    canvas: HTMLCanvasElement | string
+    imageURL: string
+    maskURL?: string
+    normalMapURL?: string
+    animationSpeed?: number
+    scale?: number
+    scrollSpeed?: number
+    direction?: number
+    ratio?: number
+    strength?: number
 }
 ```
+
+- `canvas` (required)
+    - Type: HTMLCanvasElement | string
+    - The canvas element where the water ripples will be drawn.
+    - If a string is provided, it will be used as a selector to find the canvas element.
+- `imageURL` (required)
+    - Type: string
+    - The URL of the main image to use for the water ripples.
+- `maskURL` (optional)
+    - Type: string
+    - default: `undefined`
+    - The URL of the mask to determine what areas of your image the water ripples effect is applied to.
+- `normalMapURL` (optional)
+    - Type: string
+    - default: if not provided, a default normal map will be used.
+    - The URL of the normal map for the water ripples.
+- `animationSpeed` (optional)
+    - Type: number
+    - default: `0.2`
+    - The speed of the water ripples animation.
+    - Using `setProperty` method to change the value.
+- `scale` (optional)
+    - Type: number
+    - default: `1`
+    - The scale of the water ripples.
+    - Using `setProperty` method to change the value.
+- `scrollSpeed` (optional)
+    - Type: number
+    - default: `0.2`
+    - The speed of the water ripples scroll.
+    - Using `setProperty` method to change the value.
+- `direction` (optional)
+    - Type: number
+    - default: `0`
+    - The direction of scrolling. Only works when the scrollSpeed is greater than 0. The value should be in degrees and range from 0 to 360.
+    - Using `setProperty` method to change the value.
+- `ratio` (optional)
+    - Type: number
+    - default: `1`
+    - The ratio of the ripple texture to the canvas size.
+    - Using `setProperty` method to change the value.
+- `strength` (optional)
+    - Type: number
+    - default: `0.1`
+    - The strength of the water ripples.
+    - Using `setProperty` method to change the value.

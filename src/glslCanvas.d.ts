@@ -12,10 +12,10 @@ declare module 'glslCanvas' {
         height: number
     }
 
-    type ContextOptions = WebGLContextAttributes & {
-        vertexString: string
-        fragmentString: string
-        backgroundColor: string
+    type ContextOptions = Partial<WebGLContextAttributes> & {
+        vertexString?: string
+        fragmentString?: string
+        backgroundColor?: string
     }
 
     type Options = { onError: (errorCode: number)=> void }

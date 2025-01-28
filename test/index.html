@@ -4,63 +4,196 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="../dist/umd/index.js"></script>
+    <title>Water Ripple</title>
+    <script src="../dist/umd/water-ripple-min.js"></script>
     <style>
         body {
             margin: 0;
             padding: 0;
+            background-color: #0e1921;
+            color: #fff;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .textures {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px;
+        }
+
+        .texture {
+            width: 200px;
+            cursor: pointer;
+            border: 1px solid #ccc;
         }
     </style>
 </head>
 
 <body>
-    <canvas width="1365" height="768"></canvas>
-    <div>
-        Speed
-        <input type="range" min="0" max="1" step="0.01" value="0.2" id="speed"><span id="speed-value">0.2</span>
-        Scroll Speed
-        <input type="range" min="0" max="1" step="0.01" value="0.2" id="scrollSpeed"><span
-            id="scspanSpeed-value">0.2</span>
-        Scroll Direction
-        <input type="range" min="0" max="360" step="1" value="270" id="direction"><span id="direction-value">270</span>
-        Ratio
-        <input type="range" min="0.5" max="2" step="0.1" value="1" id="ratio"><span id="ratio-value">1</span>
-        Ripple Scale
-        <input type="range" min="0" max="10" step="0.1" value="5" id="scale"><span id="scale-value">5</span>
-        Ripple Strength
-        <input type="range" min="0" max="1" step="0.01" value="0.1" id="strength"><span id="sspangth-value">0.1</span>
+    <div class="container">
+        <canvas style="max-width: 60vw;" width="1365" height="768"></canvas>
+        <div class="textures">
+            <div title="click to change texture" class="texture" id="texture1">
+                <img style="width: 100%;" src="./miku.png" alt="miku">
+                <p style="text-align: center;">Main Texture</p>
+                <input style="display: none;" type="file" name="file" accept="image/*" id="input-texture1">
+            </div>
+            <div title="click to change texture" class="texture" id="texture2">
+                <img style="width: 100%;" src="./miku_mask.png" alt="miku_mask">
+                <p style="text-align: center;">Mask Texture</p>
+                <input style="display: none;" type="file" name="file" accept="image/*" id="input-texture2">
+            </div>
+            <div>
+                <div>
+                    <p>Speed <span id="speed-value">0.2</span></p>
+                    <input type="range" min="0" max="1" step="0.01" value="0.2" id="speed">
+                </div>
+                <div>
+                    <p>Scroll Speed <span id="scspanSpeed-value">0.2</span></p>
+                    <input type="range" min="0" max="1" step="0.01" value="0.2" id="scrollSpeed">
+                </div>
+                <div>
+                    <p>Scroll Direction <span id="direction-value">270</span></p>
+                    <input type="range" min="0" max="360" step="1" value="270" id="direction">
+                </div>
+                <div>
+                    <p>Ratio <span id="ratio-value">1</span></p>
+                    <input type="range" min="0.5" max="2" step="0.1" value="1" id="ratio">
+                </div>
+                <div>
+                    <p>Ripple Scale <span id="scale-value">5</span></p>
+                    <input type="range" min="0" max="10" step="0.1" value="5" id="scale">
+                </div>
+                <div>
+                    <p>Ripple Strength <span id="sspangth-value">0.1</span></p>
+                    <input type="range" min="0" max="1" step="0.01" value="0.1" id="strength">
+                </div>
+            </div>
+        </div>
     </div>
+
 </body>
 <script>
-    const canvas = document.querySelector('canvas');
-    const waterRipple = new webglWR.WaterRipple({ canvas, imageURL: './miku.png', maskURL: './miku_mask.png' });
+    // const canvas = document.querySelector('canvas');
     // const waterRipple = new webglWR.WaterRipple({ canvas, imageURL: './miku.png' });
-    waterRipple.animate();
+    let waterRipple = new webglWR.WaterRipple({
+        canvas: "canvas",
+        imageURL: './miku.png',
+        maskURL: './miku_mask.png',
+        direction: 270,
 
-    document.querySelector('#speed').addEventListener('input', (e) => {
+    });
+
+    const $speed = document.querySelector('#speed');
+    const $scrollSpeed = document.querySelector('#scrollSpeed');
+    const $direction = document.querySelector('#direction');
+    const $ratio = document.querySelector('#ratio');
+    const $scale = document.querySelector('#scale');
+    const $strength = document.querySelector('#strength');
+
+    function getCurrentValue() {
+        return {
+            speed: Number($speed.value),
+            scrollSpeed: Number($scrollSpeed.value),
+            direction: Number($direction.value),
+            ratio: Number($ratio.value),
+            scale: Number($scale.value),
+            strength: Number($strength.value),
+        };
+    }
+
+    function resetImage(imageURL, maskURL, ...args) {
+        waterRipple.destroy();
+        const options = {
+            canvas: "canvas",
+            imageURL,
+            ...args
+        }
+        if (maskURL) {
+            options.maskURL = maskURL;
+        }
+        waterRipple = new webglWR.WaterRipple(options);
+    }
+
+
+    $speed.addEventListener('input', (e) => {
         waterRipple.setProperty('animationSpeed', Number(e.target.value));
         document.querySelector('#speed-value').textContent = e.target.value;
     });
-    document.querySelector('#scrollSpeed').addEventListener('input', (e) => {
+    $scrollSpeed.addEventListener('input', (e) => {
         waterRipple.setProperty('scrollSpeed', Number(e.target.value));
         document.querySelector('#scspanSpeed-value').textContent = e.target.value;
     });
-    document.querySelector('#direction').addEventListener('input', (e) => {
+    $direction.addEventListener('input', (e) => {
         waterRipple.setProperty('direction', Number(e.target.value));
         document.querySelector('#direction-value').textContent = e.target.value;
     });
-    document.querySelector('#ratio').addEventListener('input', (e) => {
+    $ratio.addEventListener('input', (e) => {
         waterRipple.setProperty('ratio', Number(e.target.value));
         document.querySelector('#ratio-value').textContent = e.target.value;
     });
-    document.querySelector('#scale').addEventListener('input', (e) => {
+    $scale.addEventListener('input', (e) => {
         waterRipple.setProperty('scale', Number(e.target.value));
         document.querySelector('#scale-value').textContent = e.target.value;
     });
-    document.querySelector('#strength').addEventListener('input', (e) => {
+    $strength.addEventListener('input', (e) => {
         waterRipple.setProperty('strength', Number(e.target.value));
         document.querySelector('#sspangth-value').textContent = e.target.value;
+    });
+
+    const $texture1 = document.querySelector('#texture1');
+    const $texture2 = document.querySelector('#texture2');
+    const $image1 = document.querySelector('#texture1 img');
+    const $image2 = document.querySelector('#texture2 img');
+
+    $texture1.addEventListener('click', () => {
+        const input = document.querySelector('#input-texture1');
+        input.click();
+        input.addEventListener('change', () => {
+            const file = input.files[0];
+            if (!file) {
+                return;
+            }
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => {
+                resetImage(reader.result, void 0, getCurrentValue());
+                $image1.src = reader.result;
+
+                const cvs = document.createElement('canvas');
+                cvs.width = 200;
+                cvs.height = 200 * 108 / 192;
+                const ctx = cvs.getContext('2d');
+                ctx.fillStyle = '#fff';
+                ctx.fillRect(0, 0, 200, 200);
+                $image2.src = cvs.toDataURL();
+            };
+            input.value = '';
+        });
+    });
+    $texture2.addEventListener('click', () => {
+        const input = document.querySelector('#input-texture2');
+        input.click();
+        input.addEventListener('change', () => {
+            const file = input.files[0];
+            if (!file) {
+                return;
+            }
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => {
+                resetImage($image1.src, reader.result, getCurrentValue());
+                $image2.src = reader.result;
+            };
+            input.value = '';
+        });
     });
 </script>
 

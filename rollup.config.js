@@ -37,7 +37,7 @@ const config = defineConfig([
         input: 'src/umd.ts',
         output: [
             {
-                file: 'dist/umd/index.js',
+                file: 'dist/umd/water-ripple-min.js',
                 format: 'umd',
                 name: 'webglWR',
             },

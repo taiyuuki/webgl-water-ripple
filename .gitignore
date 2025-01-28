@@ -1,2 +1,4 @@
 node_modules/
-dist/
+dist/cjs/
+dist/esm/
+dist/types/
