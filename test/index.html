@@ -109,17 +109,17 @@
         };
     }
 
-    function resetImage(imageURL, maskURL, ...args) {
+    function resetImage(imageURL, maskURL, options) {
         waterRipple.destroy();
-        const options = {
+        const opts = {
             canvas: "canvas",
             imageURL,
-            ...args
+            ...options
         }
         if (maskURL) {
             options.maskURL = maskURL;
         }
-        waterRipple = new webglWR.WaterRipple(options);
+        waterRipple = new webglWR.WaterRipple(opts);
     }
 
 
