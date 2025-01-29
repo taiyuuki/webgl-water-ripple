@@ -64,7 +64,7 @@ class WaterRipple {
         this._loadImage(imageURL, 'g_Texture0').then(img => {
             canvas.width = img.naturalWidth
             canvas.height = img.naturalHeight
-            const p = []
+            const p: Promise<HTMLImageElement>[] = []
             if (opts.maskURL) {
                 p.push(this._loadImage(opts.maskURL, 'g_Texture1'))
             }
@@ -77,11 +77,11 @@ class WaterRipple {
     
                 import('./waternormal').then(({ waterNormalTexture }) => {
                     p.push(this._loadImage(waterNormalTexture, 'g_Texture2'))
+                    Promise.all(p).then(() => {
+                        this.animate()
+                    })
                 })
             }
-            Promise.all(p).then(() => {
-                this.animate()
-            })
         })
     }
 
