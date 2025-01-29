@@ -70,6 +70,9 @@ class WaterRipple {
             }
             if (opts.normalMapURL) {
                 p.push(this._loadImage(opts.normalMapURL, 'g_Texture2'))
+                Promise.all(p).then(() => {
+                    this.animate()
+                })
             }
             else {
 
