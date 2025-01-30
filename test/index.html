@@ -83,12 +83,12 @@
 <script>
     // const canvas = document.querySelector('canvas');
     // const waterRipple = new webglWR.WaterRipple({ canvas, imageURL: './miku.png' });
+    let currentImageURL = './miku.png';
     let waterRipple = new webglWR.WaterRipple({
         canvas: "canvas",
-        imageURL: './miku.png',
+        imageURL: currentImageURL,
         maskURL: './miku_mask.png',
         direction: 270,
-
     });
 
     const $speed = document.querySelector('#speed');
@@ -117,7 +117,7 @@
             ...options
         }
         if (maskURL) {
-            options.maskURL = maskURL;
+            opts.maskURL = maskURL;
         }
         waterRipple = new webglWR.WaterRipple(opts);
     }
@@ -152,48 +152,49 @@
     const $texture2 = document.querySelector('#texture2');
     const $image1 = document.querySelector('#texture1 img');
     const $image2 = document.querySelector('#texture2 img');
+    const $input1 = document.querySelector('#input-texture1');
+    const $input2 = document.querySelector('#input-texture2');
 
     $texture1.addEventListener('click', () => {
-        const input = document.querySelector('#input-texture1');
-        input.click();
-        input.addEventListener('change', () => {
-            const file = input.files[0];
-            if (!file) {
-                return;
-            }
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = () => {
-                resetImage(reader.result, void 0, getCurrentValue());
-                $image1.src = reader.result;
-
-                const cvs = document.createElement('canvas');
-                cvs.width = 200;
-                cvs.height = 200 * 108 / 192;
-                const ctx = cvs.getContext('2d');
-                ctx.fillStyle = '#fff';
-                ctx.fillRect(0, 0, 200, 200);
-                $image2.src = cvs.toDataURL();
-            };
-            input.value = '';
-        });
+        $input1.click();
     });
     $texture2.addEventListener('click', () => {
-        const input = document.querySelector('#input-texture2');
-        input.click();
-        input.addEventListener('change', () => {
-            const file = input.files[0];
-            if (!file) {
-                return;
-            }
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = () => {
-                resetImage($image1.src, reader.result, getCurrentValue());
-                $image2.src = reader.result;
-            };
-            input.value = '';
-        });
+        $input2.click();
+    });
+    $input1.addEventListener('change', () => {
+        const file = $input1.files[0];
+        if (!file) {
+            return;
+        }
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+            resetImage(reader.result, void 0, getCurrentValue());
+            $image1.src = reader.result;
+            currentImageURL = reader.result;
+
+            const cvs = document.createElement('canvas');
+            cvs.width = 200;
+            cvs.height = 200 * 108 / 192;
+            const ctx = cvs.getContext('2d');
+            ctx.fillStyle = '#fff';
+            ctx.fillRect(0, 0, 200, 200);
+            $image2.src = cvs.toDataURL();
+        };
+        $input1.value = '';
+    });
+    $input2.addEventListener('change', () => {
+        const file = $input2.files[0];
+        if (!file) {
+            return;
+        }
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+            resetImage(currentImageURL, reader.result, getCurrentValue());
+            $image2.src = reader.result;
+        };
+        $input2.value = '';
     });
 </script>
 
